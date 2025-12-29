@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nublr_do/features/onboarding/screens/go_to_auth_screen.dart';
 import 'package:nublr_do/features/onboarding/screens/onboarding_home.dart';
 import 'package:nublr_do/features/onboarding/screens/onboarding_one.dart';
 import 'package:nublr_do/features/onboarding/screens/onboarding_three.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.light,
-      home: OnboardingThree(),
+      home: GotoAuthScreen(),
     );
   }
 }

@@ -6,6 +6,7 @@ class AppButton extends StatelessWidget {
   final AppButtonVariant variant;
   final bool isLoading;
   final bool isDisabled;
+  final bool widthFull;
 
   const AppButton({
     super.key,
@@ -14,6 +15,7 @@ class AppButton extends StatelessWidget {
     this.variant = AppButtonVariant.primary,
     this.isLoading = false,
     this.isDisabled = false,
+    this.widthFull = false,
   });
 
   @override
@@ -61,6 +63,7 @@ class AppButton extends StatelessWidget {
 
     return SizedBox(
       height: 48,
+      width: widthFull ? double.infinity : null,
       child: ElevatedButton(
         onPressed: disabled ? null : onPressed,
         style: ElevatedButton.styleFrom(
@@ -71,7 +74,9 @@ class AppButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             side: border ?? BorderSide.none,
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: variant == AppButtonVariant.ghost
+              ? EdgeInsets.zero
+              : const EdgeInsets.symmetric(horizontal: 20),
         ),
         child: isLoading
             ? const SizedBox(
@@ -79,7 +84,12 @@ class AppButton extends StatelessWidget {
           height: 20,
           child: CircularProgressIndicator(strokeWidth: 2),
         )
-            : Text(label),
+            : Text(
+          label,
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+            color: Theme.of(context).colorScheme.onSurface
+          ),
+        ),
       ),
     );
   }
