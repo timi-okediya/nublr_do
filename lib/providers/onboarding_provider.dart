@@ -24,7 +24,13 @@ class OnboardingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void completeOnboarding() {
+    _saveOnboardingStatus();
+  }
+
   void _saveOnboardingStatus() {
     storage.setItem(_key, 'true');
+    _isDone = true;
+    notifyListeners();
   }
 }

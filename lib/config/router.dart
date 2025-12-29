@@ -1,35 +1,59 @@
 import 'package:go_router/go_router.dart';
+import 'package:flutter/foundation.dart';
 import 'package:nublr_do/features/home/home_screen.dart';
 import 'package:nublr_do/features/onboarding/screens/onboarding_home.dart';
+import 'package:nublr_do/features/onboarding/screens/onboarding_screens.dart';
+import 'package:nublr_do/providers/onboarding_provider.dart';
 
-final router = GoRouter(
-  initialLocation: '/onboarding',
+GoRouter createRouter(OnboardingProvider onboardingProvider) {
+  return GoRouter(
+    initialLocation: '/onboarding',
+    refreshListenable: onboardingProvider,
 
-  redirect: (context, state) {
-    final bool onboardingDone = false;
+    redirect: (context, state) {
+      if (!onboardingProvider.isLoaded) {
+        return null;
+      }
 
-    final isOnboardingRoute = state.matchedLocation == '/onboarding';
+      final bool onboardingDone = onboardingProvider.isDone;
+      final String location = state.matchedLocation;
 
-    if (!onboardingDone && !isOnboardingRoute) {
-      return '/onboarding';
-    }
+      if (onboardingDone && (location == '/onboarding' || location == '/onboarding-steps')) {
+        return '/home';
+      }
 
-    if (onboardingDone && isOnboardingRoute) {
-      return '/home';
-    }
+      if (!onboardingDone && location == '/onboarding') {
+        return '/onboarding-steps';
+      }
 
-    return null;
-  },
+      if (!onboardingDone && location == '/home') {
+        return '/onboarding-steps';
+      }
 
-  routes: [
-    GoRoute(
-      path: '/onboarding',
-      builder: (context, state) => const OnboardingHome(),
-    ),
+      return null;
+    },
 
-    GoRoute(
-      path: '/home',
-      builder: (context, state) => const HomeScreen(),
-    ),
-  ],
-);
+    routes: [
+      GoRoute(
+        path: '/onboarding',
+        builder: (context, state) {
+          return const OnboardingHome();
+        },
+      ),
+
+      GoRoute(
+        path: '/onboarding-steps',
+        builder: (context, state) {
+          return const OnboardingScreens();
+        },
+      ),
+
+      GoRoute(
+        path: '/home',
+        builder: (context, state) {
+          return const HomeScreen();
+        },
+      ),
+    ],
+  );
+}
