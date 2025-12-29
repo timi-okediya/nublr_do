@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nublr_do/features/onboarding/screens/onboarding_home.dart';
+import 'package:nublr_do/features/onboarding/screens/onboarding_one.dart';
 import 'package:nublr_do/theme/app_theme.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.light,
-      home: OnboardingHome(),
+      home: OnboardingOne(),
     );
   }
 }
