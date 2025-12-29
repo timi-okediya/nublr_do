@@ -2,17 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:nublr_do/features/onboarding/widgets/onboarding_widget.dart';
 
 class OnboardingOne extends StatelessWidget {
-  const OnboardingOne({super.key});
+  final VoidCallback onNext;
+  final VoidCallback onSkip;
+
+  const OnboardingOne({
+    super.key,
+    required this.onNext,
+    required this.onSkip,
+  });
+
   @override
   Widget build(BuildContext context) {
-    String title = 'Get things done, clearly.';
-    String description = 'Organize tasks and focus on what matters.';
-    String imgLink = 'assets/onboarding/manage.svg';
-
     return OnboardingWidget(
-      title: title,
-      description: description,
-      imgLink: imgLink,
+      title: 'Get things done, clearly.',
+      description: 'Organize tasks and focus on what matters.',
+      imgLink: 'assets/onboarding/manage.svg',
+      currentStep: 0,
+      onNext: onNext,
+      onSkip: onSkip,
     );
   }
 }

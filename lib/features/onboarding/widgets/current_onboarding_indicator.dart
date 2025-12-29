@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CurrentOnboardingIndicator extends StatelessWidget {
-  const CurrentOnboardingIndicator({super.key, this.isActive = false});
-  final bool isActive;
+  final int currentStep;
+
+  const CurrentOnboardingIndicator({
+    super.key,
+    required this.currentStep,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +15,9 @@ class CurrentOnboardingIndicator extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        IndicatorBar(isActive: true),
-        IndicatorBar(),
-        IndicatorBar(),
+        IndicatorBar(isActive: currentStep == 0),
+        IndicatorBar(isActive: currentStep == 1),
+        IndicatorBar(isActive: currentStep == 2),
       ],
     );
   }

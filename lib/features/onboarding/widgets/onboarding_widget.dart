@@ -7,12 +7,20 @@ class OnboardingWidget extends StatelessWidget {
   final String title;
   final String description;
   final String imgLink;
+  final int currentStep;
+  final VoidCallback? onNext;
+  final VoidCallback? onBack;
+  final VoidCallback? onSkip;
 
   const OnboardingWidget({
     super.key,
     required this.title,
     required this.description,
-    required this.imgLink
+    required this.imgLink,
+    required this.currentStep,
+    this.onNext,
+    this.onBack,
+    this.onSkip,
   });
 
   @override
@@ -32,7 +40,7 @@ class OnboardingWidget extends StatelessWidget {
           children: <Widget>[
             AppButton(
               label: 'SKIP',
-              onPressed: () {},
+              onPressed: onSkip ?? () {},
               variant: AppButtonVariant.ghost,
             ),
             Expanded(
@@ -49,7 +57,7 @@ class OnboardingWidget extends StatelessWidget {
                     ),
                   ),
 
-                  CurrentOnboardingIndicator(),
+                  CurrentOnboardingIndicator(currentStep: currentStep),
 
                   SizedBox(
                     width: 300,
@@ -80,15 +88,19 @@ class OnboardingWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                AppButton(
-                  label: 'BACK',
-                  onPressed: () {},
-                  variant: AppButtonVariant.ghost,
-                ),
+                // Show back button only if onBack is provided
+                if (onBack != null)
+                  AppButton(
+                    label: 'BACK',
+                    onPressed: onBack!,
+                    variant: AppButtonVariant.ghost,
+                  )
+                else
+                  SizedBox(width: 80), // Placeholder for alignment
 
                 AppButton(
-                  label: 'NEXT',
-                  onPressed: () {},
+                  label: currentStep == 2 ? 'GET STARTED' : 'NEXT',
+                  onPressed: onNext ?? () {},
                   variant: AppButtonVariant.primary,
                 ),
               ],
